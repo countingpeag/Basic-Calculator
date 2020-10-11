@@ -19,7 +19,7 @@ const App = () => {
                 <Grid item xs={9} className="numbers">
                     <Numbers onClickNumber={ number => {
                         console.log(number)
-                        setStack(number)
+                        setStack(`${stack}${number}`)
                     }} 
                     />
                 </Grid>
