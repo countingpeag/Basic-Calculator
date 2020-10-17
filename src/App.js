@@ -1,3 +1,4 @@
+/* eslint no-eval:0 */
 import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Functions from './components/Functions';
@@ -14,7 +15,7 @@ const App = () => {
         <main className="react-calculator">
             <Grid container>
                 <Grid item xs={12} className="result">
-                    <Result value={stack}/>
+                    <Result value={stack}/> 
                 </Grid>
                 <Grid item xs={9} className="numbers">
                     <Numbers onClickNumber={ number => {
@@ -25,14 +26,29 @@ const App = () => {
                 </Grid>
                 <Grid item xs={3} className="math-operations">
                     <MathOperations 
-                    onClickOperation={operation => console.log("Operation: ",operation)}
-                    onClickEqual={ equal => console.log("Equal:",equal)}
+                        onClickOperation={operation => {
+                            console.log("Operation: ",operation)
+                            setStack(`${stack}${operation}`)
+                        }}
+                        onClickEqual={ equal => {
+                            console.log("Equal:",equal)
+                            setStack(eval(stack).toString())
+                        }}
                     />
                 </Grid>
                 <Grid item xs={12} className="functions">
                     <Functions 
-                        onContentClear={ () => console.log("Clear")}
-                        onDelete={ () => console.log("Delete")}
+                        onContentClear={ () => {
+                            console.log("Clear")
+                            setStack('');
+                        }}
+                        onDelete={ () => {
+                            if(stack.length>0){
+                                const newStack = stack.substring(0, stack.length-1)
+                                console.log("Delete")
+                                setStack(newStack);
+                            }
+                        }}
                     />
                 </Grid>
             </Grid>
