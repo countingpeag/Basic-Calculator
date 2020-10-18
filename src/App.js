@@ -1,5 +1,6 @@
 /* eslint no-eval:0 */
 import React, { useState } from 'react';
+import words from 'lodash.words';
 import Grid from '@material-ui/core/Grid';
 import Functions from './components/Functions';
 import MathOperations from './components/MathOperations'; 
@@ -11,11 +12,14 @@ const App = () => {
 
     const [stack, setStack] = useState("");
 
+    const items = words(stack, /[^-^+^*^/]+/g);
+    const value = items.length > 0 ? items[items.length-1] : "0";
+
     return (
         <main className="react-calculator">
             <Grid container>
                 <Grid item xs={12} className="result">
-                    <Result value={stack}/> 
+                    <Result value={value}/> 
                 </Grid>
                 <Grid item xs={9} className="numbers">
                     <Numbers onClickNumber={ number => {
